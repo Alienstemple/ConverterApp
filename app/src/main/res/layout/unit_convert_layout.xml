@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/value_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="@string/value_text_view_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,14 +17,16 @@
         android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/from_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint=""></EditText>
+            android:hint="from"></EditText>
 
         <EditText
+            android:id="@+id/to_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint=""></EditText>
+            android:hint="to"></EditText>
     </LinearLayout>
 
     <LinearLayout
@@ -32,13 +35,13 @@
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spinner_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <Spinner
-            android:id="@+id/spinner2"
+            android:id="@+id/spinner_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -46,13 +49,15 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/history_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="История" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/history_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/history_item"/>
 </LinearLayout>
