@@ -3,4 +3,8 @@
     <string name="available_values_text">Величины:</string>
     <string name="sort_values_button_text">Sort</string>
     <string name="value_text_view_text">Величина</string>
+
+    <string name="velocity">Скорость</string>
+    <string name="mps">м/с</string>
+    <string name="kmph">км/ч</string>
 </resources>
