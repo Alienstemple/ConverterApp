@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="sort_values_button_width">98dp</dimen>
+    <dimen name="common_button_width">98dp</dimen>
+    <dimen name="common_margin">8dp</dimen>
 </resources>
