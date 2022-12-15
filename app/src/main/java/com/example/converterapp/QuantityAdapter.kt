@@ -6,17 +6,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.converterapp.databinding.QuantityItemCardBinding
 
-class QuantityAdapter(private val onClickListener: OnClickListener)
+class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
     : RecyclerView.Adapter<QuantityAdapter.ViewHolder>() {
     private val TAG = "HtmlMultiViewAdaptLog"
 
     private val quantityList = mutableListOf<Quantity>()
+//    private val
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val quantityItemBinding = QuantityItemCardBinding.bind(view)
 
         fun bind(quantityItem: Quantity) = with(quantityItemBinding) {
-            quantityItemTextView.text = quantityItem.label // TODO pass ViewGroup context to adapter
+            quantityItemTextView.text = quantityItem.label // TODO pass ViewGroup context to
+//            itemView
         }
     }
 
@@ -27,9 +29,11 @@ class QuantityAdapter(private val onClickListener: OnClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemView.setOnClickListener(
-            onClickListener.onClick()
-        )
+
+        holder.itemView.setOnClickListener{
+            onClickListener.onClick(quantityList[position])
+        }
+
         holder.bind(quantityList[position])
     }
 
@@ -43,10 +47,6 @@ class QuantityAdapter(private val onClickListener: OnClickListener)
             addAll(passedQuantityList)
         }
 //        diffResult.dispatchUpdatesTo(this)
-    }
-
-    class OnClickListener(val clickListener: (quantity: Quantity) -> kotlin.Unit) {
-        fun onClick(quantity: Quantity) = clickListener(quantity)
     }
 }
 

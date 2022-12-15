@@ -18,8 +18,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         val quantityList = ConverterRepository().availableValues
-        quantityAdapter = QuantityAdapter(QuantityAdapter.OnClickListener {
-            Toast.makeText(applicationContext, "Item clicked", Toast.LENGTH_SHORT).show()
+        quantityAdapter = QuantityAdapter(object : OnClickListener {
+            override fun onClick(quantity: Quantity) {
+                quantityShow(quantity)
+            }
+
         })
         quantityAdapter.setQuantityList(quantityList)
 
@@ -27,5 +30,13 @@ class MainActivity : AppCompatActivity() {
             valuesListRecycler.layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
             valuesListRecycler.adapter = quantityAdapter
         }
+    }
+
+    private fun quantityShow(quantity: Quantity) {
+        Toast.makeText(this, quantity.label, Toast.LENGTH_SHORT).show()
+    }
+
+    interface OnClickListener {
+        fun onClick(quantity: Quantity)
     }
 }

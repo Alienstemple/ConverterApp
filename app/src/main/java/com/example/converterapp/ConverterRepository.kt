@@ -9,4 +9,6 @@ class ConverterRepository {
             Unit("км/ч", 3.6)
         ))
     )
+        get
+        () = field
 }
