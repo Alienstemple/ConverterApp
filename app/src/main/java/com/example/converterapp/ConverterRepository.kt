@@ -4,9 +4,9 @@ import com.example.converterapp.Unit
 
 class ConverterRepository {
     val availableValues: List<Quantity> = listOf(
-        Quantity(R.string.velocity, listOf(
-            Unit(R.string.mps, 1.0),
-            Unit(R.string.kmph, 3.6)
+        Quantity("Скорость", listOf(   // R.string.velocity
+            Unit("м/с", 1.0),
+            Unit("км/ч", 3.6)
         ))
     )
 }
