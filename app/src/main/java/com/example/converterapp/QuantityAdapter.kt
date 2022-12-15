@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.converterapp.databinding.QuantityItemCardBinding
 
-class QuantityAdapter(quantityListener: QuantityListener)
+class QuantityAdapter(private val onClickListener: OnClickListener)
     : RecyclerView.Adapter<QuantityAdapter.ViewHolder>() {
     private val TAG = "HtmlMultiViewAdaptLog"
 
@@ -27,6 +27,9 @@ class QuantityAdapter(quantityListener: QuantityListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.setOnClickListener(
+            onClickListener.onClick()
+        )
         holder.bind(quantityList[position])
     }
 
@@ -41,4 +44,9 @@ class QuantityAdapter(quantityListener: QuantityListener)
         }
 //        diffResult.dispatchUpdatesTo(this)
     }
+
+    class OnClickListener(val clickListener: (quantity: Quantity) -> kotlin.Unit) {
+        fun onClick(quantity: Quantity) = clickListener(quantity)
+    }
 }
+

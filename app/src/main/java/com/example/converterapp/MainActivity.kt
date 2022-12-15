@@ -2,6 +2,7 @@ package com.example.converterapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.converterapp.databinding.ActivityMainBinding
@@ -17,10 +18,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         val quantityList = ConverterRepository().availableValues
-        quantityAdapter = QuantityAdapter(object : QuantityListener{
-            override fun onQuantitySelected() {
-               // TODO switch to next screen
-            }
+        quantityAdapter = QuantityAdapter(QuantityAdapter.OnClickListener {
+            Toast.makeText(applicationContext, "Item clicked", Toast.LENGTH_SHORT).show()
         })
         quantityAdapter.setQuantityList(quantityList)
 
@@ -29,9 +28,4 @@ class MainActivity : AppCompatActivity() {
             valuesListRecycler.adapter = quantityAdapter
         }
     }
-
-}
-
-interface QuantityListener {
-    fun onQuantitySelected()  // TODO params?
 }
