@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ConverterApp</string>
+    <string name="available_values_text">Величины:</string>
+    <string name="sort_values_button_text">Sort</string>
 </resources>
