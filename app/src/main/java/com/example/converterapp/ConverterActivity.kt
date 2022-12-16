@@ -1,5 +1,7 @@
 package com.example.converterapp
 
+import android.content.Intent
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -22,6 +24,8 @@ class ConverterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         unitConvertLayoutBinding = UnitConvertLayoutBinding.inflate(layoutInflater)
         setContentView(unitConvertLayoutBinding.root)
+
+//        intent.getIntExtra() // TODO how to fetch context from intent (resources, R)
 
         unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}

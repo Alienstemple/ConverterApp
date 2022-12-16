@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,8 +38,8 @@ class MainActivity : AppCompatActivity() {
     private fun quantityShow(quantity: Quantity, context: Context) {
         Toast.makeText(this, quantity.label, Toast.LENGTH_SHORT).show()
         val intent = Intent(context, ConverterActivity::class.java)
-//        intent.putExtra()  // TODO pass Quantity
-        intent.putExtra("Quantity label", quantity.label)  // TODO string to Res
+        Log.d("MainActLog", "Context in quantityShow stores quant_label: ${context.getString(R.string.quantity_label)}")
+        intent.putExtra(context.getString(R.string.quantity_label), quantity.label)
         startActivity(intent)
     }
 
