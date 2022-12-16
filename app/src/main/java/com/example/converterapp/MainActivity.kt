@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, quantity.label, Toast.LENGTH_SHORT).show()
         val intent = Intent(context, ConverterActivity::class.java)
 //        intent.putExtra()  // TODO pass Quantity
-        intent.putExtra("Quantity label", quantity.label)
+        intent.putExtra("Quantity label", quantity.label)  // TODO string to Res
         startActivity(intent)
     }
 

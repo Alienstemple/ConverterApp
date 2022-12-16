@@ -34,15 +34,30 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/from_spinner_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="From quantity" />
+
         <Spinner
             android:id="@+id/spinner_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+        <TextView
+            android:id="@+id/to_spinner_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="To quantity" />
+
         <Spinner
             android:id="@+id/spinner_to"
             android:layout_width="match_parent"
+            android:spinnerMode="dropdown"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
