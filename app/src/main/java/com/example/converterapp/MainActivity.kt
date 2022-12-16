@@ -1,5 +1,7 @@
 package com.example.converterapp
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -19,8 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         val quantityList = ConverterRepository().availableValues
         quantityAdapter = QuantityAdapter(object : OnClickListener {
-            override fun onClick(quantity: Quantity) {
-                quantityShow(quantity)
+            override fun onClick(quantity: Quantity, context: Context) {
+                quantityShow(quantity, context)
             }
 
         })
@@ -32,11 +34,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun quantityShow(quantity: Quantity) {
+    private fun quantityShow(quantity: Quantity, context: Context) {
         Toast.makeText(this, quantity.label, Toast.LENGTH_SHORT).show()
+        val intent = Intent(context, ConverterActivity::class.java)
+//        intent.putExtra()  // TODO pass Quantity
+        intent.putExtra("Quantity label", quantity.label)
+        startActivity(intent)
     }
 
     interface OnClickListener {
-        fun onClick(quantity: Quantity)
+        fun onClick(quantity: Quantity, context: Context)
     }
 }

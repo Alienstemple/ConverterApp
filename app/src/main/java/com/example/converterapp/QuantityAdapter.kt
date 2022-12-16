@@ -30,8 +30,10 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        val context = holder.itemView.context  // Here context of view is known. Pass it to onClick
+
         holder.itemView.setOnClickListener{
-            onClickListener.onClick(quantityList[position])
+            onClickListener.onClick(quantityList[position], context)
         }
 
         holder.bind(quantityList[position])
