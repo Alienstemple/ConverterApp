@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -25,8 +26,10 @@ class ConverterActivity : AppCompatActivity() {
         unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // TODO Converter.convert
+            override fun onTextChanged(passedNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                // TODO toDouble - null safety, check input
+                var resultNumber = ConverterInteractor().plainConvert(passedNumber.toString().toDouble(), convertingFromUnit, convertingToUnit)
+                unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
             }
 
             override fun afterTextChanged(p0: Editable?) {}
@@ -48,6 +51,7 @@ class ConverterActivity : AppCompatActivity() {
                 if (selectedItem == "one") {
                     Toast.makeText(this@ConverterActivity, "One selected", Toast.LENGTH_SHORT).show()
                     convertingFromUnit = Unit("one", 1.0)  // Here we initialize from which unit we will convert
+                    Log.d("ConvActLog", "convertingFromUnit initialized")
                 }
             }
 
@@ -67,6 +71,7 @@ class ConverterActivity : AppCompatActivity() {
                 if (selectedItem == "two") {
                     Toast.makeText(this@ConverterActivity, "Two selected", Toast.LENGTH_SHORT).show()
                     convertingToUnit = Unit("two", 3.6)  // Here we initialize to which unit we will convert
+                    Log.d("ConvActLog", "convertingToUnit initialized")
                 }
             }
 

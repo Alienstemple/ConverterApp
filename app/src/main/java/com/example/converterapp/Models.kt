@@ -19,7 +19,7 @@ data class Quantity (val label: String, val unitList: List<Unit>) //: Parcelable
 //    private val fromBaseRate: Double = 1.0 / toBaseRate
 //}
 data class Unit (val label: String, val toBaseRate: Double) {
-    private val fromBaseRate: Double = 1.0 / toBaseRate
+    val fromBaseRate: Double = 1.0 / toBaseRate
 }
 
 /**
