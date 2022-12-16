@@ -1,12 +1,17 @@
 package com.example.converterapp
 
+import android.content.Context
 import com.example.converterapp.Unit
 
-class ConverterRepository {
+class ConverterRepository() {
     val availableValues: List<Quantity> = listOf(
-        Quantity("Скорость", listOf(   // R.string.velocity
-            Unit("м/с", 1.0),
-            Unit("км/ч", 3.6)
+        Quantity(R.string.velocity, listOf(   // R.string.velocity
+            Unit(R.string.mps, 1.0),
+            Unit(R.string.kmph, 3.6)
+        )),
+        Quantity(R.string.square, listOf(   // R.string.square
+            Unit(R.string.sqm, 1.0),
+            Unit(R.string.ha, 0.0001)
         ))
     )
         get

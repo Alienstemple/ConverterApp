@@ -7,5 +7,8 @@
     <string name="velocity">Скорость</string>
     <string name="mps">м/с</string>
     <string name="kmph">км/ч</string>
+    <string name="square">Площадь</string>
+    <string name="sqm">кв.м.</string>
+    <string name="ha">гектар</string>
     <string name="quantity_item_text">Величина</string>
 </resources>

@@ -50,7 +50,7 @@ class ConverterActivity : AppCompatActivity() {
                 val selectedItem = parent.getItemAtPosition(position).toString()
                 if (selectedItem == "one") {
                     Toast.makeText(this@ConverterActivity, "One selected", Toast.LENGTH_SHORT).show()
-                    convertingFromUnit = Unit("one", 1.0)  // Here we initialize from which unit we will convert
+                    convertingFromUnit = Unit(R.string.mps, 1.0)  // Here we initialize from which unit we will convert
                     Log.d("ConvActLog", "convertingFromUnit initialized")
                 }
             }
@@ -70,7 +70,7 @@ class ConverterActivity : AppCompatActivity() {
                 val selectedItem = parent.getItemAtPosition(position).toString()
                 if (selectedItem == "two") {
                     Toast.makeText(this@ConverterActivity, "Two selected", Toast.LENGTH_SHORT).show()
-                    convertingToUnit = Unit("two", 3.6)  // Here we initialize to which unit we will convert
+                    convertingToUnit = Unit(R.string.kmph, 3.6)  // Here we initialize to which unit we will convert
                     Log.d("ConvActLog", "convertingToUnit initialized")
                 }
             }

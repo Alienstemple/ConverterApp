@@ -1,5 +1,6 @@
 package com.example.converterapp
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,9 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
         private val quantityItemBinding = QuantityItemCardBinding.bind(view)
 
         fun bind(quantityItem: Quantity) = with(quantityItemBinding) {
-            quantityItemTextView.text = quantityItem.label // TODO pass ViewGroup context to
-//            itemView
+            val quantityName = itemView.context.getString(quantityItem.label)
+            quantityItemTextView.text = quantityName   // FIXME  Only first item pased
+            Log.d("QuantityAdaptLog", "Binded Quantity with name $quantityName")
         }
     }
 
