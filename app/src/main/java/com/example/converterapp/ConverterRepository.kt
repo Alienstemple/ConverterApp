@@ -5,13 +5,13 @@ import com.example.converterapp.Unit
 
 class ConverterRepository() {
     var availableValues: List<Quantity> = listOf(
-        Quantity(R.string.velocity, listOf(   // R.string.velocity
-            Unit(R.string.mps, 1.0),
-            Unit(R.string.kmph, 3.6)
+        Quantity("Скорость", listOf(   // R.string.velocity
+            Unit("м/с", 1.0),
+            Unit("км/ч", 3.6)
         )),
-        Quantity(R.string.square, listOf(   // R.string.square
-            Unit(R.string.sqm, 1.0),
-            Unit(R.string.ha, 0.0001)
+        Quantity("Площадь", listOf(   // R.string.square
+            Unit("кв.м.", 1.0),
+            Unit("гектар", 0.0001)
         ))
     )
 

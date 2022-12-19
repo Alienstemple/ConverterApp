@@ -1,8 +1,5 @@
 package com.example.converterapp
 
-import android.content.Intent
-import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,15 +8,15 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.converterapp.databinding.UnitConvertLayoutBinding
 
 class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
 
     // Initialize from, to. Suppose, wrong
-    lateinit var convertingFromUnit: Unit   // TODO move out of here!
-    lateinit var convertingToUnit: Unit
+    var convertingFromUnit: Unit = defaultInitUnit()   // TODO move out of here! // TODO by lazy - default values
+    var convertingToUnit: Unit = defaultInitUnit()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,41 +26,51 @@ class ConverterActivity : AppCompatActivity() {
 //        intent.getIntExtra() // TODO how to fetch context from intent (resources, R)
 
         // TextChanged listener
-        unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher{
+        unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(passedNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // TODO toDouble - null safety, check input
                 // Apply main convert logic
                 // Here ConvertFromUnit, convertToUnit must be initialized
-                var resultNumber = ConverterInteractor().plainConvert(passedNumber.toString().toDouble(), convertingFromUnit, convertingToUnit)
-                // Is EditText.setText true?
-                unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
+                if (passedNumber!!.isNotEmpty()) {
+                    var resultNumber = ConverterInteractor().plainConvert(
+                        passedNumber.toString().toDouble(),
+                        convertingFromUnit,
+                        convertingToUnit
+                    )
+                    // Is EditText.setText true?
+                    unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
+                }
 
             }
 
             override fun afterTextChanged(p0: Editable?) {}
         })
 
-        val spinnerFromData = ConverterRepository().availableValues[0].unitList
-//        val spinnerFromData = ConverterRepository().availableValues.map {  }[0].unitList  // TODO getExtra label of Quantity
+        val spinnerData =
+            ConverterRepository().availableValues[0].unitList.map { unit -> unit.label }
 
         val testSpinnerData = listOf("one", "two")  // TODO list of Unit.label items
         // Spiner from
         val spinnerFrom: Spinner = unitConvertLayoutBinding.spinnerFrom
-        val spinnerFromArrayAdapter = ArrayAdapter(this,
+        val spinnerFromArrayAdapter = ArrayAdapter(
+            this,
             R.layout.spinner_item,
-            testSpinnerData
+            spinnerData
         )
         spinnerFrom.adapter = spinnerFromArrayAdapter
         spinnerFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                if (selectedItem == "one") {
-                    Toast.makeText(this@ConverterActivity, "One selected", Toast.LENGTH_SHORT).show()
-                    convertingFromUnit = Unit(R.string.mps, 1.0)  // Here we initialize from which unit we will convert
-                    Log.d("ConvActLog", "convertingFromUnit initialized")
-                }
+
+                convertingFromUnit = initUnit(selectedItem)!!
+                Log.d("ConvActLog", "convertingFromUnit initialized")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -71,23 +78,35 @@ class ConverterActivity : AppCompatActivity() {
 
         // Spiner to
         val spinnerTo: Spinner = unitConvertLayoutBinding.spinnerTo
-        val spinnerToArrayAdapter = ArrayAdapter(this,
+        val spinnerToArrayAdapter = ArrayAdapter(
+            this,
             R.layout.spinner_item,
-            testSpinnerData
+            spinnerData
         )
         spinnerTo.adapter = spinnerToArrayAdapter
         spinnerTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                if (selectedItem == "two") {
-                    Toast.makeText(this@ConverterActivity, "Two selected", Toast.LENGTH_SHORT).show()
-                    convertingToUnit = Unit(R.string.kmph, 3.6)  // Here we initialize to which unit we will convert
-                    Log.d("ConvActLog", "convertingToUnit initialized")
-                }
+
+                convertingToUnit = initUnit(selectedItem)!!
+
+                Log.d("ConvActLog", "convertingToUnit initialized")
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
     }
+
+    private fun initUnit(selectedItem: String) =
+        ConverterRepository().availableValues[0].unitList
+            .find { it.label == selectedItem }  // TODO pass index of Quantity
+
+    private fun defaultInitUnit() = ConverterRepository().availableValues[0].unitList[0]
 }

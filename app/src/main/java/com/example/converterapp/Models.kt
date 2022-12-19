@@ -7,8 +7,8 @@ import androidx.annotation.StringRes
  * Физическая величина, имеет название label, хранит список единиц измерения unitList с коэффициентами
  */
 //@Parcelize   // TODO 1 import, 2 try without @
-data class Quantity (@StringRes val label: Int, val unitList: List<Unit>) //: Parcelable
-//data class Quantity (val label: String, val unitList: List<Unit>) //: Parcelable
+//data class Quantity (@StringRes val label: Int, val unitList: List<Unit>) //: Parcelable
+data class Quantity (val label: String, val unitList: List<Unit>) //: Parcelable
 
 /**
  * Единица измерения. Имеет название label,
@@ -18,7 +18,7 @@ data class Quantity (@StringRes val label: Int, val unitList: List<Unit>) //: Pa
 //data class Unit (@StringRes val label: Int, val toBaseRate: Double) {
 //    private val fromBaseRate: Double = 1.0 / toBaseRate
 //}
-data class Unit (@StringRes val label: Int, val toBaseRate: Double) {
+data class Unit (val label: String, val toBaseRate: Double) {
     val fromBaseRate: Double = 1.0 / toBaseRate
 }
 

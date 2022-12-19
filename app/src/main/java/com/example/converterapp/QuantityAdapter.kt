@@ -18,7 +18,7 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
         private val quantityItemBinding = QuantityItemCardBinding.bind(view)
 
         fun bind(quantityItem: Quantity) = with(quantityItemBinding) {
-            val quantityName = itemView.context.getString(quantityItem.label)
+            val quantityName = quantityItem.label
             quantityItemTextView.text = quantityName   // FIXME  Only first item pased
             Log.d("QuantityAdaptLog", "Binded Quantity with name $quantityName")
         }
