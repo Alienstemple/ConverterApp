@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        Log.d(TAG, "Quantity list is: ${quantityList}")
         quantityAdapter.setQuantityList(quantityList)
 
         activityMainBinding.apply {

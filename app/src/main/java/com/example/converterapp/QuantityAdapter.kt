@@ -12,7 +12,6 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
     private val TAG = "HtmlMultiViewAdaptLog"
 
     private val quantityList = mutableListOf<Quantity>()
-//    private val
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val quantityItemBinding = QuantityItemCardBinding.bind(view)
@@ -49,7 +48,9 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
         quantityList.apply {
             clear()
             addAll(passedQuantityList)
+            Log.d(TAG, "Passed to adapter list: $passedQuantityList")
         }
+        Log.d(TAG, "Inner list: $quantityList")
 //        diffResult.dispatchUpdatesTo(this)
     }
 }
