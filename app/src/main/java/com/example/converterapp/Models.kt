@@ -1,8 +1,5 @@
 package com.example.converterapp
 
-import android.os.Parcelable
-import androidx.annotation.StringRes
-
 /**
  * Физическая величина, имеет название label, хранит список единиц измерения unitList с коэффициентами
  */
@@ -28,3 +25,10 @@ data class Unit (val label: String, val toBaseRate: Double) {
  * непосредственно значение value
  */
 data class ConverterValue(val converterQuantity: Quantity)
+
+/**
+ * Элемент списка истории конвертации
+ */
+data class HistoryItem (val position: Int, val fromValue: String, val fromUnit: String, val toValue: String, val toUnit: String) {
+    val historyItem = "[" + position + "] " + fromValue + " " + fromUnit + " -> " + toValue + " " + toUnit
+}

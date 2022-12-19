@@ -12,4 +12,5 @@
     <string name="ha">гектар</string>
     <string name="quantity_item_text">Величина</string>
     <string name="quantity_label">Quantity label</string>
+    <string name="history_item_text">Элемент истории</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.converterapp
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,10 +10,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.converterapp.databinding.UnitConvertLayoutBinding
 
 class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
+    lateinit var historyAdapter: HistoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +107,20 @@ class ConverterActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        // History
+        val testHistoryList = listOf(
+            HistoryItem(1, "1", "м/с", "3,6", "км/ч"),
+            HistoryItem(2, "2", "м/с", "7,2", "км/ч")
+        )
+        historyAdapter = HistoryAdapter()
+        Log.d("ConvertActivLog", "History list is: ${testHistoryList}")
+        historyAdapter.setHistoryList(testHistoryList)
+
+        unitConvertLayoutBinding.apply {
+            historyRecyclerView.layoutManager = LinearLayoutManager(this@ConverterActivity, RecyclerView.VERTICAL, false)
+            historyRecyclerView.adapter = historyAdapter
         }
 
     }

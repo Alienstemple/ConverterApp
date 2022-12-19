@@ -9,7 +9,7 @@ import com.example.converterapp.databinding.QuantityItemCardBinding
 
 class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
     : RecyclerView.Adapter<QuantityAdapter.ViewHolder>() {
-    private val TAG = "HtmlMultiViewAdaptLog"
+    private val TAG = "QuantAdaptLog"
 
     private val quantityList = mutableListOf<Quantity>()
 
@@ -18,7 +18,7 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
 
         fun bind(quantityItem: Quantity) = with(quantityItemBinding) {
             val quantityName = quantityItem.label
-            quantityItemTextView.text = quantityName   // FIXME  Only first item pased
+            quantityItemTextView.text = quantityName
             Log.d("QuantityAdaptLog", "Binded Quantity with name $quantityName")
         }
     }
