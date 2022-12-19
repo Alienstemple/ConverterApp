@@ -34,15 +34,8 @@ class ConverterActivity : AppCompatActivity() {
                 // Apply main convert logic
                 // Here ConvertFromUnit, convertToUnit must be initialized
                 if (passedNumber!!.isNotEmpty()) {
-                    var resultNumber = ConverterInteractor().plainConvert(
-                        passedNumber.toString().toDouble(),
-                        convertingFromUnit,
-                        convertingToUnit
-                    )
-                    // Is EditText.setText true?
-                    unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
+                    convert(passedNumber)
                 }
-
             }
 
             override fun afterTextChanged(p0: Editable?) {}
@@ -70,6 +63,13 @@ class ConverterActivity : AppCompatActivity() {
                 val selectedItem = parent.getItemAtPosition(position).toString()
 
                 convertingFromUnit = initUnit(selectedItem)!!
+
+                // Call converter if new unit selected
+                val passedNumber = unitConvertLayoutBinding.fromEditText.text
+                if (passedNumber.isNotEmpty()) {
+                    convert(passedNumber)
+                }
+
                 Log.d("ConvActLog", "convertingFromUnit initialized")
             }
 
@@ -95,6 +95,12 @@ class ConverterActivity : AppCompatActivity() {
 
                 convertingToUnit = initUnit(selectedItem)!!
 
+                // Call converter if new unit selected
+                val passedNumber = unitConvertLayoutBinding.toEditText.text
+                if (passedNumber.isNotEmpty()) {
+                    convert(passedNumber)
+                }
+
                 Log.d("ConvActLog", "convertingToUnit initialized")
 
             }
@@ -109,4 +115,14 @@ class ConverterActivity : AppCompatActivity() {
             .find { it.label == selectedItem }  // TODO pass index of Quantity
 
     private fun defaultInitUnit() = ConverterRepository().availableValues[0].unitList[0]
+
+    private fun convert(passedNumber: CharSequence) {
+        var resultNumber = ConverterInteractor().plainConvert(
+            passedNumber.toString().toDouble(),
+            convertingFromUnit,
+            convertingToUnit
+        )
+        // Is EditText.setText true?
+        unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
+    }
 }
