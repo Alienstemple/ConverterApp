@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
     private fun quantityShow(quantity: Quantity, context: Context) {
         Toast.makeText(this, quantity.label, Toast.LENGTH_SHORT).show()
         val intent = Intent(context, ConverterActivity::class.java)
-        Log.d("MainActLog", "Context in quantityShow stores quant_label: ${context.getString(R.string.quantity_label)}")
-        intent.putExtra(this.getString(R.string.quantity_label), quantity.label)  // Pass Quantity
+        Log.d("MainActLog", "Context in quantityShow stores quant_label: ${quantity.label}")
+        intent.putExtra("Quantity", quantity.label)  // Pass Quantity
         startActivity(intent)
     }
 

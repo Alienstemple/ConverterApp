@@ -14,27 +14,26 @@ import com.example.converterapp.databinding.UnitConvertLayoutBinding
 class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
 
-    // Initialize from, to. Suppose, wrong
-    var convertingFromUnit: Unit = defaultInitUnit()   // TODO move out of here! // TODO by lazy - default values
-    var convertingToUnit: Unit = defaultInitUnit()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         unitConvertLayoutBinding = UnitConvertLayoutBinding.inflate(layoutInflater)
         setContentView(unitConvertLayoutBinding.root)
 
-//        intent.getIntExtra() // TODO how to fetch context from intent (resources, R)
+        val currentQuantity: Quantity = initCurrentQuantity()!!
+
+        // Initialize from, to. Suppose, wrong
+        var convertingFromUnit: Unit = defaultInitUnit(currentQuantity)  // TODO Ask: after initialization of currentQuantity
+        var convertingToUnit: Unit = defaultInitUnit(currentQuantity)
 
         // TextChanged listener
         unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(passedNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // TODO toDouble - null safety, check input
                 // Apply main convert logic
                 // Here ConvertFromUnit, convertToUnit must be initialized
                 if (passedNumber!!.isNotEmpty()) {
-                    convert(passedNumber)
+                    convert(passedNumber, convertingFromUnit, convertingToUnit)
                 }
             }
 
@@ -42,9 +41,8 @@ class ConverterActivity : AppCompatActivity() {
         })
 
         val spinnerData =
-            ConverterRepository().availableValues[0].unitList.map { unit -> unit.label }
+            currentQuantity?.unitList!!.map { unit -> unit.label }
 
-        val testSpinnerData = listOf("one", "two")  // TODO list of Unit.label items
         // Spiner from
         val spinnerFrom: Spinner = unitConvertLayoutBinding.spinnerFrom
         val spinnerFromArrayAdapter = ArrayAdapter(
@@ -62,12 +60,12 @@ class ConverterActivity : AppCompatActivity() {
             ) {
                 val selectedItem = parent.getItemAtPosition(position).toString()
 
-                convertingFromUnit = initUnit(selectedItem)!!
+                convertingFromUnit = initUnit(currentQuantity, selectedItem)!!
 
                 // Call converter if new unit selected
                 val passedNumber = unitConvertLayoutBinding.fromEditText.text
                 if (passedNumber.isNotEmpty()) {
-                    convert(passedNumber)
+                    convert(passedNumber, convertingFromUnit, convertingToUnit)
                 }
 
                 Log.d("ConvActLog", "convertingFromUnit initialized")
@@ -93,16 +91,15 @@ class ConverterActivity : AppCompatActivity() {
             ) {
                 val selectedItem = parent.getItemAtPosition(position).toString()
 
-                convertingToUnit = initUnit(selectedItem)!!
+                convertingToUnit = initUnit(currentQuantity, selectedItem)!!
 
                 // Call converter if new unit selected
-                val passedNumber = unitConvertLayoutBinding.toEditText.text
+                val passedNumber = unitConvertLayoutBinding.fromEditText.text
                 if (passedNumber.isNotEmpty()) {
-                    convert(passedNumber)
+                    convert(passedNumber, convertingFromUnit, convertingToUnit)
                 }
 
                 Log.d("ConvActLog", "convertingToUnit initialized")
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -110,14 +107,14 @@ class ConverterActivity : AppCompatActivity() {
 
     }
 
-    private fun initUnit(selectedItem: String) =
-        ConverterRepository().availableValues[0].unitList
-            .find { it.label == selectedItem }  // TODO pass index of Quantity
+    private fun initUnit(currentQuantity: Quantity, selectedItem: String) =
+        currentQuantity?.unitList
+            ?.find { it.label == selectedItem }
 
-    private fun defaultInitUnit() = ConverterRepository().availableValues[0].unitList[0]
+    private fun defaultInitUnit(currentQuantity: Quantity) = currentQuantity!!.unitList[0]
 
-    private fun convert(passedNumber: CharSequence) {
-        var resultNumber = ConverterInteractor().plainConvert(
+    private fun convert(passedNumber: CharSequence, convertingFromUnit: com.example.converterapp.Unit, convertingToUnit: com.example.converterapp.Unit) {
+        val resultNumber = ConverterInteractor().plainConvert(
             passedNumber.toString().toDouble(),
             convertingFromUnit,
             convertingToUnit
@@ -125,4 +122,7 @@ class ConverterActivity : AppCompatActivity() {
         // Is EditText.setText true?
         unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
     }
+
+    private fun initCurrentQuantity() = ConverterRepository().availableValues.find {it .label == intent.getStringExtra("Quantity")}
 }
+
