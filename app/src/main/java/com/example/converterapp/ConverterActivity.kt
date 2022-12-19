@@ -17,6 +17,7 @@ import com.example.converterapp.databinding.UnitConvertLayoutBinding
 class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
 
+    // Initialize from, to. Suppose, wrong
     lateinit var convertingFromUnit: Unit   // TODO move out of here!
     lateinit var convertingToUnit: Unit
 
@@ -27,19 +28,25 @@ class ConverterActivity : AppCompatActivity() {
 
 //        intent.getIntExtra() // TODO how to fetch context from intent (resources, R)
 
+        // TextChanged listener
         unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(passedNumber: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // TODO toDouble - null safety, check input
+                // Apply main convert logic
+                // Here ConvertFromUnit, convertToUnit must be initialized
                 var resultNumber = ConverterInteractor().plainConvert(passedNumber.toString().toDouble(), convertingFromUnit, convertingToUnit)
+                // Is EditText.setText true?
                 unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
+
             }
 
             override fun afterTextChanged(p0: Editable?) {}
         })
 
-        val spinnerFromData = ConverterRepository().availableValues[0].unitList  // TODO getExtra label of Quantity
+        val spinnerFromData = ConverterRepository().availableValues[0].unitList
+//        val spinnerFromData = ConverterRepository().availableValues.map {  }[0].unitList  // TODO getExtra label of Quantity
 
         val testSpinnerData = listOf("one", "two")  // TODO list of Unit.label items
         // Spiner from

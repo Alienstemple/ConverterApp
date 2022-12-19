@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(activityMainBinding.root)
 
+        // Initialize List, onClick, adapter for start screen RecyclerView
         val quantityList = ConverterRepository().availableValues
         quantityAdapter = QuantityAdapter(object : OnClickListener {
             override fun onClick(quantity: Quantity, context: Context) {
@@ -35,11 +36,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun quantityShow(quantity: Quantity, context: Context) {
         Toast.makeText(this, quantity.label, Toast.LENGTH_SHORT).show()
         val intent = Intent(context, ConverterActivity::class.java)
         Log.d("MainActLog", "Context in quantityShow stores quant_label: ${context.getString(R.string.quantity_label)}")
-        intent.putExtra(context.getString(R.string.quantity_label), quantity.label)
+        intent.putExtra(this.getString(R.string.quantity_label), quantity.label)  // Pass Quantity
         startActivity(intent)
     }
 
