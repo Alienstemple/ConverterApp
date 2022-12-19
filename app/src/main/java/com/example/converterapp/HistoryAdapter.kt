@@ -44,6 +44,7 @@ class HistoryAdapter()
             Log.d(TAG, "Passed to history list: $passedHistoryList")
         }
         Log.d(TAG, "Inner list: $historyList")
+        notifyDataSetChanged()
 //        diffResult.dispatchUpdatesTo(this)
     }
 }

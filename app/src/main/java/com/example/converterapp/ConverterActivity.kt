@@ -18,6 +18,8 @@ class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
     lateinit var historyAdapter: HistoryAdapter
 
+    var historyList = ArrayList<HistoryItem>()  // History of convertation
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         unitConvertLayoutBinding = UnitConvertLayoutBinding.inflate(layoutInflater)
@@ -25,7 +27,7 @@ class ConverterActivity : AppCompatActivity() {
 
         val currentQuantity: Quantity = initCurrentQuantity()!!
 
-        // Initialize from, to. Suppose, wrong
+        // Initialize from, to
         var convertingFromUnit: Unit = defaultInitUnit(currentQuantity)  // TODO Ask: after initialization of currentQuantity
         var convertingToUnit: Unit = defaultInitUnit(currentQuantity)
 
@@ -139,8 +141,21 @@ class ConverterActivity : AppCompatActivity() {
         )
         // Is EditText.setText true?
         unitConvertLayoutBinding.toEditText.setText(resultNumber.toString())
+        fillHistory()
     }
 
     private fun initCurrentQuantity() = ConverterRepository().availableValues.find {it .label == intent.getStringExtra("Quantity")}
+    // Add new item to the top of the list and update adapter's list
+    private fun fillHistory() {
+        Log.d("ConvertActLog", "History filled.")
+        historyList.add(0, collectInfoAboutConverting())
+        historyAdapter.setHistoryList(historyList)
+    }
+
+    // Collects info from EditTests and spinners
+    // Call everyTime after converting
+    private fun collectInfoAboutConverting() = with (unitConvertLayoutBinding){
+        HistoryItem(1, fromEditText.text.toString(), spinnerFrom.selectedItem.toString(), toEditText.text.toString(), spinnerTo.selectedItem.toString())  // TODO position
+    }
 }
 
