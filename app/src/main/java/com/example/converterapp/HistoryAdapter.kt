@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.converterapp.databinding.HistoryItemBinding
 
@@ -35,16 +36,15 @@ class HistoryAdapter()
 
     override fun getItemCount() = historyList.size
 
-    fun setHistoryList(passedHistoryList: List<HistoryItem>) {
-//        val diffUtilCallback = HtmlColorDiffUtil(colorGeneralList, colorlist)
-//        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
+    fun setHistoryList(passedHistoryList: ArrayList<HistoryItem>) {
+        val diffUtilCallback = HistoryDiffUtil(historyList, passedHistoryList)
+        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
         historyList.apply {
             clear()
             addAll(passedHistoryList)
             Log.d(TAG, "Passed to history list: $passedHistoryList")
         }
         Log.d(TAG, "Inner list: $historyList")
-        notifyDataSetChanged()
-//        diffResult.dispatchUpdatesTo(this)
+        diffResult.dispatchUpdatesTo(this)
     }
 }

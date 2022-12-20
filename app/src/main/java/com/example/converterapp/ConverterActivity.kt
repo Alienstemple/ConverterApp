@@ -112,12 +112,12 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         // History
-        val testHistoryList = listOf(
+        val testHistoryList = arrayListOf (
             HistoryItem(1, "1", "м/с", "3,6", "км/ч"),
             HistoryItem(2, "2", "м/с", "7,2", "км/ч")
         )
         historyAdapter = HistoryAdapter()
-        Log.d("ConvertActivLog", "History list is: ${testHistoryList}")
+        Log.d("ConvertActivLog", "History list is: $testHistoryList")
         historyAdapter.setHistoryList(testHistoryList)
 
         unitConvertLayoutBinding.apply {
