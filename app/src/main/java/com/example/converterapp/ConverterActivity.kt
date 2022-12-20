@@ -18,7 +18,6 @@ class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
     private lateinit var historyAdapter: HistoryAdapter
 
-    private var historyList = ArrayList<HistoryItem>()  // History of convertation
     private var currentHistoryNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,7 +113,6 @@ class ConverterActivity : AppCompatActivity() {
 
         // History
         historyAdapter = HistoryAdapter()
-        historyAdapter.setHistoryList(historyList)
 
         unitConvertLayoutBinding.apply {
             historyRecyclerView.layoutManager = LinearLayoutManager(this@ConverterActivity, RecyclerView.VERTICAL, false)
@@ -144,8 +142,8 @@ class ConverterActivity : AppCompatActivity() {
     // Add new item to the top of the list and update adapter's list
     private fun fillHistory() {
         Log.d("ConvertActLog", "History filled.")
-        historyList.add(0, collectInfoAboutConverting())
-        historyAdapter.setHistoryList(historyList)
+        val newHistoryItem: HistoryItem = collectInfoAboutConverting()
+        historyAdapter.addHistoryItemToTop(newHistoryItem)
     }
 
     // Collects info from EditTests and spinners

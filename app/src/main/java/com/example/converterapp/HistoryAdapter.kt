@@ -47,4 +47,9 @@ class HistoryAdapter()
         Log.d(TAG, "Inner list: $historyList")
         diffResult.dispatchUpdatesTo(this)
     }
+
+    fun addHistoryItemToTop(item: HistoryItem) {
+        historyList.add(0, item)
+        notifyItemInserted(0)
+    }
 }
