@@ -16,9 +16,10 @@ import com.example.converterapp.databinding.UnitConvertLayoutBinding
 
 class ConverterActivity : AppCompatActivity() {
     lateinit var unitConvertLayoutBinding: UnitConvertLayoutBinding
-    lateinit var historyAdapter: HistoryAdapter
+    private lateinit var historyAdapter: HistoryAdapter
 
-    var historyList = ArrayList<HistoryItem>()  // History of convertation
+    private var historyList = ArrayList<HistoryItem>()  // History of convertation
+    private var currentHistoryNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,13 +113,8 @@ class ConverterActivity : AppCompatActivity() {
         }
 
         // History
-        val testHistoryList = arrayListOf (
-            HistoryItem(1, "1", "м/с", "3,6", "км/ч"),
-            HistoryItem(2, "2", "м/с", "7,2", "км/ч")
-        )
         historyAdapter = HistoryAdapter()
-        Log.d("ConvertActivLog", "History list is: $testHistoryList")
-        historyAdapter.setHistoryList(testHistoryList)
+        historyAdapter.setHistoryList(historyList)
 
         unitConvertLayoutBinding.apply {
             historyRecyclerView.layoutManager = LinearLayoutManager(this@ConverterActivity, RecyclerView.VERTICAL, false)
@@ -155,7 +151,7 @@ class ConverterActivity : AppCompatActivity() {
     // Collects info from EditTests and spinners
     // Call everyTime after converting
     private fun collectInfoAboutConverting() = with (unitConvertLayoutBinding){
-        HistoryItem(1, fromEditText.text.toString(), spinnerFrom.selectedItem.toString(), toEditText.text.toString(), spinnerTo.selectedItem.toString())  // TODO position
+        HistoryItem(++currentHistoryNumber, fromEditText.text.toString(), spinnerFrom.selectedItem.toString(), toEditText.text.toString(), spinnerTo.selectedItem.toString())  // TODO position
     }
 }
 
