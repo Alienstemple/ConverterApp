@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.converterapp.databinding.QuantityItemCardBinding
 
@@ -42,16 +43,16 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
 
     override fun getItemCount() = quantityList.size
 
-    fun setQuantityList(passedQuantityList: List<Quantity>) {
-//        val diffUtilCallback = HtmlColorDiffUtil(colorGeneralList, colorlist)
-//        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
+    fun setQuantityList(passedQuantityList: MutableList<Quantity>) {
+        val diffUtilCallback = QuantityDiffUtil(quantityList, passedQuantityList)
+        val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
         quantityList.apply {
             clear()
             addAll(passedQuantityList)
             Log.d(TAG, "Passed to adapter list: $passedQuantityList")
         }
         Log.d(TAG, "Inner list: $quantityList")
-//        diffResult.dispatchUpdatesTo(this)
+        diffResult.dispatchUpdatesTo(this)
     }
 }
 

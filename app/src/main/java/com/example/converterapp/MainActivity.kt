@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(activityMainBinding.root)
 
         // Initialize List, onClick, adapter for start screen RecyclerView
-        val quantityList = ConverterRepository().availableValues
+        val quantityList = ConverterRepository().availableValues.toMutableList()
         quantityAdapter = QuantityAdapter(object : OnClickListener {
             override fun onClick(quantity: Quantity, context: Context) {
                 quantityShow(quantity, context)
@@ -34,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.apply {
             valuesListRecycler.layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
             valuesListRecycler.adapter = quantityAdapter
+        }
+
+        // Sorting
+        activityMainBinding.sortValuesButton.setOnClickListener {
+//            quantityList.sortedByDescending { it.label } // TODO even and odd clicks OR check is sorted
+            quantityAdapter.setQuantityList(quantityList.sortedBy { it.label } as MutableList<Quantity>)
         }
     }
 
