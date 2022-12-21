@@ -20,6 +20,8 @@ class ConverterActivity : AppCompatActivity() {
 
     private var currentHistoryNumber = 0
 
+    private val currentQuantity: Quantity? by lazy { initCurrentQuantity()}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         unitConvertLayoutBinding = UnitConvertLayoutBinding.inflate(layoutInflater)

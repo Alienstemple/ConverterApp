@@ -14,16 +14,6 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
 
     private val quantityList = mutableListOf<Quantity>()
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val quantityItemBinding = QuantityItemCardBinding.bind(view)
-
-        fun bind(quantityItem: Quantity) = with(quantityItemBinding) {
-            val quantityName = quantityItem.label
-            quantityItemTextView.text = quantityName
-            Log.d("QuantityAdaptLog", "Binded Quantity with name $quantityName")
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.quantity_item_card, parent, false)
@@ -53,6 +43,16 @@ class QuantityAdapter(private val onClickListener: MainActivity.OnClickListener)
         }
         Log.d(TAG, "Inner list: $quantityList")
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val quantityItemBinding = QuantityItemCardBinding.bind(view)
+
+        fun bind(quantityItem: Quantity) = with(quantityItemBinding) {
+            val quantityName = quantityItem.label
+            quantityItemTextView.text = quantityName
+            Log.d("QuantityAdaptLog", "Binded Quantity with name $quantityName")
+        }
     }
 }
 

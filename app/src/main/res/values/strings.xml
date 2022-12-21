@@ -13,4 +13,5 @@
     <string name="quantity_item_text">Величина</string>
     <string name="quantity_label">Quantity label</string>
     <string name="history_item_text">Элемент истории</string>
+    <string name="spinner_item_text">spinner item</string>
 </resources>

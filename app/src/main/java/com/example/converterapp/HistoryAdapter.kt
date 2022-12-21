@@ -15,15 +15,6 @@ class HistoryAdapter()
 
     private val historyList = mutableListOf<HistoryItem>()
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val historyItemBinding = HistoryItemBinding.bind(view)
-
-        fun bind(historyItem: HistoryItem) = with(historyItemBinding) {
-            historyItemBinding.historyItemTextView.text = historyItem.historyItem
-            Log.d("HistoryAdaptLog", "Binded HistoryItem with name $historyItem")
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.history_item, parent, false)
@@ -51,5 +42,14 @@ class HistoryAdapter()
     fun addHistoryItemToTop(item: HistoryItem) {
         historyList.add(0, item)
         notifyItemInserted(0)
+    }
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val historyItemBinding = HistoryItemBinding.bind(view)
+
+        fun bind(historyItem: HistoryItem) = with(historyItemBinding) {
+            historyItemBinding.historyItemTextView.text = historyItem.historyItem
+            Log.d("HistoryAdaptLog", "Binded HistoryItem with name $historyItem")
+        }
     }
 }
