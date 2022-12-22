@@ -20,18 +20,17 @@ class ConverterActivity : AppCompatActivity() {
 
     private var currentHistoryNumber = 0
 
-    private val currentQuantity: Quantity? by lazy { initCurrentQuantity()}
+    private val converterRepository: ConverterRepository by lazy { ConverterRepository() }  // TODO by lazy repo
+
+    private val currentQuantity: Quantity? by lazy { initCurrentQuantity()}  // TODO add to functions!
+
+    private var convertingFromUnit: Unit = defaultInitUnit()  // TODO Ask: after initialization of currentQuantity
+    private var convertingToUnit: Unit = defaultInitUnit()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         unitConvertLayoutBinding = UnitConvertLayoutBinding.inflate(layoutInflater)
         setContentView(unitConvertLayoutBinding.root)
-
-        val currentQuantity: Quantity = initCurrentQuantity()!!
-
-        // Initialize from, to
-        var convertingFromUnit: Unit = defaultInitUnit(currentQuantity)  // TODO Ask: after initialization of currentQuantity
-        var convertingToUnit: Unit = defaultInitUnit(currentQuantity)
 
         // TextChanged listener
         unitConvertLayoutBinding.fromEditText.addTextChangedListener(object : TextWatcher {
@@ -41,7 +40,7 @@ class ConverterActivity : AppCompatActivity() {
                 // Apply main convert logic
                 // Here ConvertFromUnit, convertToUnit must be initialized
                 if (passedNumber!!.isNotEmpty()) {
-                    convert(passedNumber, convertingFromUnit, convertingToUnit)
+                    convert(passedNumber)
                 }
             }
 
@@ -68,12 +67,12 @@ class ConverterActivity : AppCompatActivity() {
             ) {
                 val selectedItem = parent.getItemAtPosition(position).toString()
 
-                convertingFromUnit = initUnit(currentQuantity, selectedItem)!!
+                convertingFromUnit = initUnit(selectedItem)!!
 
                 // Call converter if new unit selected
                 val passedNumber = unitConvertLayoutBinding.fromEditText.text
                 if (passedNumber.isNotEmpty()) {
-                    convert(passedNumber, convertingFromUnit, convertingToUnit)
+                    convert(passedNumber)
                 }
 
                 Log.d("ConvActLog", "convertingFromUnit initialized")
@@ -99,12 +98,12 @@ class ConverterActivity : AppCompatActivity() {
             ) {
                 val selectedItem = parent.getItemAtPosition(position).toString()
 
-                convertingToUnit = initUnit(currentQuantity, selectedItem)!!
+                convertingToUnit = initUnit(selectedItem)!!
 
                 // Call converter if new unit selected
                 val passedNumber = unitConvertLayoutBinding.fromEditText.text
                 if (passedNumber.isNotEmpty()) {
-                    convert(passedNumber, convertingFromUnit, convertingToUnit)
+                    convert(passedNumber)
                 }
 
                 Log.d("ConvActLog", "convertingToUnit initialized")
@@ -123,13 +122,13 @@ class ConverterActivity : AppCompatActivity() {
 
     }
 
-    private fun initUnit(currentQuantity: Quantity, selectedItem: String) =
+    private fun initUnit(selectedItem: String) =
         currentQuantity?.unitList
             ?.find { it.label == selectedItem }
 
-    private fun defaultInitUnit(currentQuantity: Quantity) = currentQuantity!!.unitList[0]
+    private fun defaultInitUnit() = currentQuantity!!.unitList[0]
 
-    private fun convert(passedNumber: CharSequence, convertingFromUnit: com.example.converterapp.Unit, convertingToUnit: com.example.converterapp.Unit) {
+    private fun convert(passedNumber: CharSequence) {
         val resultNumber = ConverterInteractor().plainConvert(
             passedNumber.toString().toDouble(),
             convertingFromUnit,
@@ -140,7 +139,7 @@ class ConverterActivity : AppCompatActivity() {
         fillHistory()
     }
 
-    private fun initCurrentQuantity() = ConverterRepository().availableValues.find {it .label == intent.getStringExtra("Quantity")}
+    private fun initCurrentQuantity() = converterRepository.availableValues.find {it .label == intent.getStringExtra("Quantity")}
     // Add new item to the top of the list and update adapter's list
     private fun fillHistory() {
         Log.d("ConvertActLog", "History filled.")
